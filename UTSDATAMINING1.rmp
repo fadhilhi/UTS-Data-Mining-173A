@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.3.000">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.3.000" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="413" width="762">
+      <operator activated="true" class="read_excel" compatibility="5.3.000" expanded="true" height="60" name="Read Excel" width="90" x="45" y="30">
+        <parameter key="excel_file" value="C:\Users\Mutiny\Desktop\Book1.xlsx"/>
+        <parameter key="sheet_number" value="1"/>
+        <parameter key="imported_cell_range" value="A1:F15"/>
+        <parameter key="encoding" value="SYSTEM"/>
+        <parameter key="first_row_as_names" value="false"/>
+        <list key="annotations">
+          <parameter key="0" value="Name"/>
+        </list>
+        <parameter key="date_format" value=""/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="OUTLOOK.true.polynominal.attribute"/>
+          <parameter key="1" value="TEMPERATUR.true.polynominal.attribute"/>
+          <parameter key="2" value="HUMIDITY.true.binominal.attribute"/>
+          <parameter key="3" value="WINDY.true.binominal.attribute"/>
+          <parameter key="4" value="PLAY.true.binominal.label"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="true"/>
+        <parameter key="datamanagement" value="double_array"/>
+      </operator>
+      <operator activated="true" class="decision_tree" compatibility="5.3.000" expanded="true" height="76" name="Decision Tree" width="90" x="180" y="30">
+        <parameter key="criterion" value="gain_ratio"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="minimal_leaf_size" value="2"/>
+        <parameter key="minimal_gain" value="0.1"/>
+        <parameter key="maximal_depth" value="20"/>
+        <parameter key="confidence" value="0.25"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+        <parameter key="no_pre_pruning" value="false"/>
+        <parameter key="no_pruning" value="false"/>
+      </operator>
+      <connect from_op="Read Excel" from_port="output" to_op="Decision Tree" to_port="training set"/>
+      <connect from_op="Decision Tree" from_port="model" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>
